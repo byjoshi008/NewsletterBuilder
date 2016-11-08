@@ -1,0 +1,33 @@
+[{
+	"name": "Section 1",
+	"bgColor": "#364b59",
+	"columns": [{
+		"width": "50",
+		"align": "center",
+		"content": [{
+			"type": "text",
+			"category":"Title2",
+			"style": "",
+			"detail": "Message From Mark"
+		}, {
+			"type": "text",
+			"category":"Text",
+			"style": "",
+			"detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		}]
+	}, {
+		"width": "50",
+		"align": "center",
+		"content": [{
+			"type": "text",
+			"category":"Title2",
+			"style": "",
+			"detail": "Rede's Rightshore"
+		}, {
+			"type": "text",
+			"category":"Text",
+			"style": "",
+			"detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		}]
+	}]
+}]

@@ -1,0 +1,79 @@
+[{
+	"name": "Section 1",
+	"bgColor": "#364b59",
+	"columns": [{
+		"width": "50",
+		"align": "center",
+		"content": [{
+			"type": "text",
+			"category":"Title2",
+			"style": "",
+			"detail": "Message From Mark"
+		}, {
+			"type": "text",
+			"category":"Text",
+			"style": "",
+			"detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		}]
+	}, {
+		"width": "50",
+		"align": "center",
+		"content": [{
+			"type": "text",
+			"category":"Title2",
+			"style": "",
+			"detail": "Rede's Rightshore"
+		}, {
+			"type": "text",
+			"category":"Text",
+			"style": "",
+			"detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		}]
+	}]
+}, {
+	"name": "Section 2",
+	"bgColor": "#f1ae40",
+	"columns": [{
+		"width": "50",
+		"align": "center"
+	}, {
+		"width": "50",
+		"align": "center"
+	}]
+}, {
+	"name": "Section 3",
+	"bgColor": "#4dad7f",
+	"columns": [{
+		"width": "33",
+		"align": "center"
+	}, {
+		"width": "33",
+		"align": "center"
+	}, {
+		"width": "33",
+		"align": "center"
+	}]
+}, {
+	"name": "Section 4",
+	"bgColor": "#444444",
+	"columns": [{
+		"width": "25",
+		"align": "center"
+	}, {
+		"width": "25",
+		"align": "center"
+	}, {
+		"width": "25",
+		"align": "center"
+	}, {
+		"width": "25",
+		"align": "center"
+	}]
+}, {
+	"name": "Section 5",
+	"bgColor": "#c75045",
+	"columns": [{
+		"width": "100",
+		"align": "center"
+	}]
+}]

@@ -1,0 +1,113 @@
+<div class="section_panel_template">
+	<div class="panel-heading section_panel_header">
+		<div class="panel-title">
+			<a data-toggle="collapse" data-target="#<%= sectionId %>"
+				href="#"><%= sectionName %>
+			</a>
+			<span class="section_config"><i class="fa fa-cog" aria-hidden="true"></i></span>
+			<span class="section_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+		</div>
+	</div>
+	<div id="<%= sectionId %>" class="panel-collapse collapse in">
+		<div class="panel-body section_panel_content">
+			<div class="form-group section_form_group">
+				<label>Name</label> <input type="text"
+					class="form-control section_name"
+					value="<%= sectionName %>">
+			</div>
+			<div class="form-group section_form_group">
+				<label>Background Color</label> <input type="text"
+					class="form-control jscolor"
+					value="<%= bgColor %>">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Template for Column Configure section -->
+<div class="column_config_template">
+	<div class="column_config_header row">
+		<div class="col-xs-12 column_config_header_text">
+			<%= columnName %>
+			<span class="column_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+		</div>
+	</div>
+	<div class="column_form_group">
+		<div class="form-group">
+			<label>Width (%)</label> <input type="text"
+				class="form-control column_width"
+				value="<%= columnWidth %>">
+		</div>
+	</div>
+	<div class="column_content_container">
+		<div class="content_title row">
+			<span>Content</span>
+			<span class="content_panel_change_icon content_expand"><i class="fa fa-expand" aria-hidden="true"></i></span>
+			<span class="content_panel_change_icon content_collapse"><i class="fa fa-compress" aria-hidden="true"></i></span>
+			<span class="content_icon add_image"><i class="fa fa-picture-o" aria-hidden="true"></i></span>
+			<span class="content_icon add_text"><i class="fa fa-font" aria-hidden="true"></i></span>
+		</div>
+		<div class="panel-group content_panel_group">
+			
+		</div>
+	</div>
+</div>
+
+<!-- Template for content panel -->
+<div class="content_panel_template">
+	<div class="panel panel-default content_panel">
+		<div class="panel-heading content_panel_header">
+			<div class="panel-title">
+				<a data-toggle="collapse" data-target="#<%= contentId %>"
+					href="#" class="collapsed"><%= contentType %>
+				</a>
+				<span class="content_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+			</div>
+		</div>
+		<div id="<%= contentId %>" class="panel-collapse collapse">
+			<div class="panel-body content_panel_content">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Template for text content -->
+<div class="text_content_template">
+	<div class="form-group content_form_group">
+		<div class="text_editor"></div>
+	</div>
+</div>
+
+<!-- Template for image content -->
+<div class="image_content_template">
+	<div class="form-group content_form_group">
+		<label>Category</label> 
+		<select class="form-control image_category">
+			<option value="Small">Small</option>
+			<option value="Medium">Medium</option>
+			<option value="Large">Large</option>
+			<option value="Full">Full</option>
+		</select>
+	</div>
+	<div class="form-group content_form_group">
+		<input type="text" class="form-control image_file_name" readonly value="<%= imageContent %>">
+		<div class="fileUpload btn btn-md btn-primary">
+    		<span><i class="fa fa-picture-o" aria-hidden="true"></i> Select Image</span>
+    		<input type="file" class="upload image_content_value" accept="image/*"/>
+		</div>
+		<div class="checkbox image_link_cb">
+  			<label><input type="checkbox">Create Image as Link</label>
+		</div>
+	</div>
+	<div class="form-group content_form_group image_link_details">
+		<input type="text" placeholder="Enter Link Here" class="form-control image_link_text" value="<%= linkText %>">
+		<div class="checkbox image_extlink_cb">
+  			<label><input type="checkbox">Open in New Window</label>
+		</div>
+	</div>
+	<div class="form-group content_form_group">
+		<label>CSS</label> 
+		<textarea rows="2" class="form-control image_content_style"><%= imageContentCSS %></textarea>
+	</div>
+</div>

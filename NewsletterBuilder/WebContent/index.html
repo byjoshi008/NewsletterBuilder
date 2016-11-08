@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Newsletter Builder</title>
+
+<link href="./jquery/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+<link href="./jquery/jquery-ui.structure.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="./jquery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="./jquery/jquery-ui.min.js"></script>
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+
+<link href="./css/fonts/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="./css/jquery.toast.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="./js/utils/jquery.toast.js"></script>
+<script type="text/javascript" src="./js/utils/underscore_1.8.3.min.js"></script>
+<script type="text/javascript" src="./js/utils/jscolor.js"></script>
+<script type="text/javascript" src="./js/utils/moment.min.js"></script>
+
+<link href="./summernote/summernote.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="./summernote/summernote.min.js"></script>
+
+<link href="./css/style.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="./js/section/Content.js"></script>
+<script type="text/javascript" src="./js/section/Column.js"></script>
+<script type="text/javascript" src="./js/section/Section.js"></script>
+<script type="text/javascript" src="./js/scripts.js"></script>
+
+</head>
+<body>
+<a class="download_link"></a>
+	<div class="header">Newsletter Builder</div>
+	<div class="left_btn_container">
+		<!-- <div class="fileUpload btn btn-md app_header_btn btn-primary">
+    		<span><i class="fa fa-folder-open" aria-hidden="true"></i> Open</span>
+    		<input type="file" class="upload" id="open_config_btn" />
+		</div> -->
+		<button id="open_config_btn" class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-folder-open" aria-hidden="true"></i> Open
+		</button>
+		<button id="new_config_btn" class="btn btn-primary btn-md app_header_btn" data-toggle="modal" data-target="#new_config_modal">
+			<i class="fa fa-file" aria-hidden="true"></i> Create
+		</button>
+		<button id="global_options_btn" class="btn btn-primary btn-md app_header_btn" data-toggle="modal" data-target="#global_options_modal">
+			<i class="fa fa-cogs" aria-hidden="true"></i> Global Settings
+		</button>
+	</div>
+	<div class="right_btn_container">
+		<button id="preview_btn" class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-eye" aria-hidden="true"></i> Preview
+		</button>
+		<button id="editor_btn" class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-cogs" aria-hidden="true"></i> Editor
+		</button>
+		<button id="config_download_btn"
+			class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+		</button>
+		<button id="export_html_btn"
+			class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-cloud-download" aria-hidden="true"></i> Save HTML
+		</button>
+	</div>
+	<div class="main_container container-fluid">
+		<div class="left_content">
+			<div id="page1" class="page active_page">
+				<div class="page_header row">
+					<div class="col-xs-2"></div>
+					<div class="col-xs-8 page_header_text">Sections</div>
+					<div class="col-xs-2">
+						<button id="add_section_btn" class="btn btn-primary btn-md page_header_btn" data-toggle="modal" data-target="#add_section_modal">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+				<div class="panel-group section_panel_group">
+				
+				</div>
+			</div>
+			<div id="page2" class="page"></div>
+		</div>
+		<div class="right_content">
+			<div class="page_header row">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-8 page_header_text section_config_header_text">Configure Section</div>
+				<div class="col-xs-2 section_config_header_btn">
+					<button id="add_column_btn" class="btn btn-primary btn-md page_header_btn">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<div class="column_container">
+			
+			</div>
+		</div>
+	</div>
+	<div class="nl_preview_container">
+		<iframe id="nl_iframe"></iframe>
+	</div>
+
+<!-- Add new section modal -->
+<div id="add_section_modal" class="modal fade app_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Section</h4>
+      </div>
+      
+	  <div class="modal-body">
+	  <div class="modal_body_content">
+			<div class="form-group">
+				<label for="section_name_input">Name of the Section</label> 
+				<input type="text" class="form-control add_section_modal_input" id="section_name_input">
+			</div>
+			<div class="form-group">
+				<label for="background_color_input">Background Color</label> 
+				<input type="text" class="form-control add_section_modal_input jscolor" id="background_color_input">
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+  					<label style="font-weight: bold;"><input style="transform: scale(2.0);" type="checkbox" id="back_to_top_cb" name="back_to_top_cb" value="">&nbsp;&nbsp;&nbsp;"Back To Top" Link</label>
+				</div>
+			</div>
+		</div>
+	  </div>
+	  
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="create_section_btn" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="new_config_modal" class="modal fade app_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create New Configuration</h4>
+      </div>
+      
+	  <div class="modal-body">
+	  	<div class="modal_body_content">
+			<span>Your existing changes will be lost. Do you want to continue ?</span> 
+		</div>
+	  </div>
+	  
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="new_config_modal_btn" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Global Options Modal -->
+<div id="global_options_modal" class="modal fade app_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Global Settings</h4>
+      </div>
+      
+	  <div class="modal-body">
+	  	<div class="modal_body_content" style="width:100%;">
+			 <div class="form-group">
+				<label for="image_location_input">Image Location</label> 
+				<input type="text" class="form-control" id="image_location_input">
+			</div>
+		</div>
+	  </div>
+	  
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="save_global_option_btn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Open Config Modal -->
+<div id="open_config_modal" class="modal fade app_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Open Newsletter Template</h4>
+      </div>
+      
+	  <div class="modal-body">
+	  	<div class="modal_body_content">
+			<table class="table table-bordered table-hover" id="open_config_table">
+			
+			</table> 
+		</div>
+	  </div>
+	  
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/html" id="app_templates">
+<div class="section_panel_template">
+	<div class="panel-heading section_panel_header">
+		<div class="panel-title">
+			<a data-toggle="collapse" data-target="#<%= sectionId %>"
+				href="#"><%= sectionName %>
+			</a>
+			<span class="section_config"><i class="fa fa-cog" aria-hidden="true"></i></span>
+			<span class="section_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+		</div>
+	</div>
+	<div id="<%= sectionId %>" class="panel-collapse collapse in">
+		<div class="panel-body section_panel_content">
+			<div class="form-group section_form_group">
+				<label>Name</label> <input type="text"
+					class="form-control section_name"
+					value="<%= sectionName %>">
+			</div>
+			<div class="form-group section_form_group">
+				<label>Background Color</label> <input type="text"
+					class="form-control jscolor"
+					value="<%= bgColor %>">
+			</div>
+			<div class="form-group section_form_group">
+				<div class="checkbox">
+  					<label style="font-weight: bold; width: 100%; text-align: center;"><input style="transform: scale(2.0); width: auto;" type="checkbox" class="section_back_to_top" value="">&nbsp;&nbsp;&nbsp;"Back To Top" Link</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Template for Column Configure section -->
+<div class="column_config_template">
+	<div class="column_config_header row">
+		<div class="col-xs-12 column_config_header_text">
+			<%= columnName %>
+			<span class="column_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+		</div>
+	</div>
+	<div class="column_form_group">
+		<div class="form-group">
+			<label>Width (%)</label> <input type="text"
+				class="form-control column_width"
+				value="<%= columnWidth %>">
+		</div>
+	</div>
+	<div class="column_content_container">
+		<div class="content_title row">
+			<span>Content</span>
+			<span class="content_panel_change_icon content_expand"><i class="fa fa-expand" aria-hidden="true"></i></span>
+			<span class="content_panel_change_icon content_collapse"><i class="fa fa-compress" aria-hidden="true"></i></span>
+			<span class="content_icon add_image"><i class="fa fa-picture-o" aria-hidden="true"></i></span>
+			<span class="content_icon add_text"><i class="fa fa-font" aria-hidden="true"></i></span>
+		</div>
+		<div class="panel-group content_panel_group">
+			
+		</div>
+	</div>
+</div>
+
+<!-- Template for content panel -->
+<div class="content_panel_template">
+	<div class="panel panel-default content_panel">
+		<div class="panel-heading content_panel_header">
+			<div class="panel-title">
+				<a data-toggle="collapse" data-target="#<%= contentId %>"
+					href="#" class="collapsed"><%= contentType %>
+				</a>
+				<span class="content_delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+			</div>
+		</div>
+		<div id="<%= contentId %>" class="panel-collapse collapse">
+			<div class="panel-body content_panel_content">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Template for text content -->
+<div class="text_content_template">
+	<div class="form-group content_form_group">
+		<div class="text_editor"></div>
+	</div>
+</div>
+
+<!-- Template for image content -->
+<div class="image_content_template">
+	<div class="form-group content_form_group">
+		<label>Category</label> 
+		<select class="form-control image_category">
+			<option value="Small">Small</option>
+			<option value="Medium">Medium</option>
+			<option value="Large">Large</option>
+			<option value="Full">Full</option>
+			<option value="XXL">XXL</option>
+			<option value="XL">XL</option>
+			<option value="L">L</option>
+			<option value="M">M</option>
+			<option value="S">S</option>
+			<option value="XS">XS</option>
+			<option value="Other">Other</option>
+		</select>
+	</div>
+	<div class="form-group content_form_group">
+		<input type="text" class="form-control image_file_name" readonly value="<%= imageContent %>">
+		<div class="fileUpload btn btn-md btn-primary">
+    		<span><i class="fa fa-picture-o" aria-hidden="true"></i> Select Image</span>
+    		<input type="file" class="upload image_content_value" accept="image/*"/>
+		</div>
+		<div class="checkbox image_link_cb">
+  			<label><input type="checkbox">Create Image as Link</label>
+		</div>
+	</div>
+	<div class="form-group content_form_group image_link_details">
+		<input type="text" placeholder="Enter Link Here" class="form-control image_link_text" value="<%= linkText %>">
+		<div class="checkbox image_extlink_cb">
+  			<label><input type="checkbox">Open in New Window</label>
+		</div>
+	</div>
+	<div class="form-group content_form_group">
+		<label>CSS</label> 
+		<textarea rows="2" class="form-control image_content_style"><%= imageContentCSS %></textarea>
+	</div>
+</div>
+</script>
+<script type="text/html" id="section_template">
+<div class="section_template">
+	<a name="<%= sectionName %>"></a>
+	<table class="deviceWidth contentTable"
+		style="background-color: <%= bgColor %>" border="0" cellpadding="5"
+		cellspacing="0" align="center">
+		<tr class="section_content">
+			
+		</tr>
+	</table>
+</div>
+
+
+<div class="column_template">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" style="width:100%;">
+			<tr>
+				<td align="center" class="column_contnet" valign="top"></td>
+			</tr>
+		</table>
+</div>
+</script>
+<script type="text/template" id="nl_template">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SAP News Letter</title>
+<style type="text/css">
+table { border-collapse: collapse; }
+.font1 { font-family: arial; }
+.font2 { font-family: Helvetica; }
+.mainTable { width: 100%; }
+.mainColumn { width: 100%; padding: 20px 0; }
+.contentTable { margin: 0 auto; width: 800px; }
+.deviceWidth { margin: 0 auto; width: 800px; }
+.section_content { padding: 5px 0; }
+.nl_text { color: white; width: 90%; padding: 0 8px; font-size: 14px; line-height: 15px; margin: 5px auto; text-align: justify; }
+.nl_text a { color: white; }
+
+.ExternalClass {width:100%;} 
+                         
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+	line-height: 100%;
+}  
+body {-webkit-text-size-adjust:none; -ms-text-size-adjust:none;} 
+body { margin:0; padding:0; font-family: arial; color: #FFF; font-size: 14px; }
+p { margin:0; padding:0; margin-bottom:0; color: #FFF; }
+div { margin:0; padding:0; margin-bottom:0; color: #FFF; }
+span, li { color: #FFF; } 
+
+a, a:link {
+	color:#FFF;
+    text-decoration: underline;
+}  
+ 
+span.yshortcuts { color:#FFF; background-color:none; border:none;}
+span.yshortcuts:hover, span.yshortcuts:active, span.yshortcuts:focus {color:#FFF; background-color:none; border:none;}
+                 
+a:visited { color: #FFF; text-decoration: underline;} 
+a:focus   { color: #FFF; text-decoration: underline;}  
+a:hover   { color: #FFF; text-decoration: underline;}  
+                         
+@media only screen and (max-width: 640px) {
+	body[yahoo] .deviceWidth {
+		width: 440px !important;
+		padding: 0;
+		display: block !important;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+	body[yahoo] .deviceWidth {
+		width: 280px !important;
+		padding: 0;
+		display: block !important;
+	}
+}
+</style>
+</head>
+<body style="width: 100%; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; font-family: arial; color: #FFF; font-size: 14px;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix">
+	<table class="mainTable" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+		<tr>
+			<td width="100%" valign="top" style="width: 100%;">
+				<a name="topsection"></a>
+				<%= newsLetterContent %>								 
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+</script>
+
+</body>
+</html>
+
+<!-- color: white; padding: 0 10px; font-size: 14px; line-height: 15px; margin: 5px 0; width: 100%;
+
+	<td width="<%= columnWidth %>%" class="deviceWidth"> -->
+<!-- <tr class="back_to_top_row">
+			<td align="right"><a href="top" class="back_to_top_link font1">Back to Top</a></td>
+		</tr> -->
+		
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>SAP News Letter</title>
+<style type="text/css">
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	font-family: arial;
+	color: white;
+}
+
+table {
+	border-collapse: collapse;
+}
+.font1 { font-family: arial; }
+.font2 { font-family: Helvetica; }
+.mainTable { width: 100%; }
+.mainColumn { width: 100%; padding: 20px 0; }
+.contentTable { margin: 0 auto; width: 750px; }
+.deviceWidth { margin: 0 auto; width: 750px; }
+.section_content { padding: 5px 0; }
+.nl_text { color: white; width: 80%; padding: 0 8px; font-size: 14px; line-height: 15px; margin: 5px 10%; text-align: justify; }
+.nl_text a { color: white; }
+.nl_img_small { height: 50px; max-width: 100%; margin: 10px 0; }
+.nl_img_medium { height: 150px; max-width: 70%; margin: 10px 0; }
+.nl_img_large { height: 250px; max-width: 90%; margin: 10px 0; }
+.nl_full_width { width: 98%; height: auto; margin: 10px 0; }
+.back_to_top_link { color: white; margin: 10px; font-size: 14px; }
+
+@media only screen and (max-width: 640px) {
+	body .deviceWidth {
+		width: 440px !important;
+		padding: 0;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+	body .deviceWidth {
+		width: 280px !important;
+		padding: 0;
+	}
+}
+</style>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<table class="mainTable" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+		<tr>
+			<td width="100%" valign="top" class="mainColumn">
+			<a name="top"></a>
+			<%= newsLetterContent %>								 
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+ -->		
