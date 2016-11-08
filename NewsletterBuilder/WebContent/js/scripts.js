@@ -292,7 +292,7 @@ $(document).ready(function(){
 						var guid = $(this).attr("data-guid");
 												
 						$.ajax({
-							url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid = '"+guid+"')",
+							url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+guid+"')",
 							type: "GET",
 							headers: {     
 				                        "X-Requested-With": "XMLHttpRequest",
