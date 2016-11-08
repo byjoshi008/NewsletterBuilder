@@ -304,6 +304,7 @@ $(document).ready(function(){
 								app.config = JSON.parse(data.d.Template);
 								currentTemplateId = data.d.Guid;
 								currentTemplateName = data.d.Title;
+								$("#open_config_modal").modal("hide");
 								loadConfiguration();
 							},
 							
@@ -381,8 +382,8 @@ $(document).ready(function(){
 								};
 								
 								$.ajax({
-									url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid = '"+currentTemplateId+"')",
-									type: "POST",
+									url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+currentTemplateId+"')",
+									type: "PUT",
 									data: JSON.stringify(payload),
 									headers: {     
 		                                "X-Requested-With": "XMLHttpRequest",
@@ -432,7 +433,6 @@ $(document).ready(function(){
 				success: function(data, textStatus, request){
 					csrfToken = request.getResponseHeader('x-csrf-token');
 					var payload = {
-							Guid: "",
 							Title: currentTemplateName,
 							Template: JSON.stringify(app.config)
 						};
