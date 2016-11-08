@@ -4,6 +4,7 @@ app.colorPicker = {padding: 10, borderWidth: 2, hash: true, position: 'top'};
 app.previewFlag = true;
 var urlRoot = location.protocol+"//"+location.host+"/sap/opu/odata/sap/";
 var currentTemplateId = "";
+var currentTemplateName = "";
 
 /**
  * Function to generate newsletter preview
@@ -265,7 +266,7 @@ $(document).ready(function(){
 				table.append(headerRow)
 				
 				_.each(data.d.results, function(record){
-					var row = $("<tr class='config_table_record' data-guid='"+record.Guid+"'>")
+					var row = $("<tr class='config_table_record' data-guid='"+record.Guid+"' data-templatename = '"+record.Title+"'>")
 					
 					var column1 = $("<td>").html(record.Title);
 					row.append(column1);
@@ -289,6 +290,28 @@ $(document).ready(function(){
 					
 					row.click(function(){
 						var guid = $(this).attr("data-guid");
+												
+						$.ajax({
+							url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid = '"+guid+"')",
+							type: "GET",
+							headers: {     
+				                        "X-Requested-With": "XMLHttpRequest",
+				                        "Content-Type": "application/atom+xml",
+				                        "Accept": "application/json",
+				                        "DataServiceVersion": "2.0",       
+									},
+							success: function(data, textStatus, request){
+								app.config = JSON.parse(data.d.Template);
+								currentTemplateId = data.d.Guid;
+								currentTemplateName = data.d.Title;
+								loadConfiguration();
+							},
+							
+							error: function(error){
+								alert("Error in service while fetching list of available templates.");
+							}
+						});
+						
 					});
 				});
 				
@@ -325,9 +348,7 @@ $(document).ready(function(){
 	$("#config_download_btn").click(function(){
 		
 		if(app.config.imageLocation == ""){
-			
 			alert("Image location is not available. Please maintain image location in Global Settings.");
-			
 		} else {
 			
 			if( !_.isEmpty(app.config.sections)){
@@ -338,48 +359,24 @@ $(document).ready(function(){
 				anchor.download = "Newsletter_Config_"+moment().format("YYYYMMDD_HHmmSS")+".json";
 				
 				$(".download_link")[0].click();*/
-
-				var csrfToken = "";
-				$.ajax({
-					url: urlRoot + "ZNEWSLETTER_SRV/$metadata",
-					type: "GET",
-					headers: {     
-                                "X-Requested-With": "XMLHttpRequest",
-                                "Content-Type": "application/atom+xml",
-                                "DataServiceVersion": "2.0",       
-                                "X-CSRF-Token":"Fetch"   
-							},
-					success: function(data, textStatus, request){
-						csrfToken = request.getResponseHeader('x-csrf-token');
-						
-						if(currentTemplateId == ""){
+				if(currentTemplateId == ""){
+					$("#template_name_modal").modal("show");
+				}
+				else {
+					var csrfToken = "";
+					$.ajax({
+						url: urlRoot + "ZNEWSLETTER_SRV/$metadata",
+						type: "GET",
+						headers: {     
+	                                "X-Requested-With": "XMLHttpRequest",
+	                                "Content-Type": "application/atom+xml",
+	                                "DataServiceVersion": "2.0",       
+	                                "X-CSRF-Token":"Fetch"   
+								},
+						success: function(data, textStatus, request){
+							csrfToken = request.getResponseHeader('x-csrf-token');
 							var payload = {
-									Guid: "",
-									Title: _.uniqueId("Newsletter "),
-									Template: JSON.stringify(app.config)
-								};
-								
-								$.ajax({
-									url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet",
-									type: "POST",
-									data: JSON.stringify(payload),
-									headers: {     
-		                                "X-Requested-With": "XMLHttpRequest",
-		                                "Content-Type": "application/json",
-		                                "Accept": "application/json",
-		                                "DataServiceVersion": "2.0",       
-		                                "X-CSRF-Token": csrfToken   
-									},
-									success: function(response){
-										currentTemplateId = response.d.Guid;
-									},
-									error: function(error){
-										alert("Error in service while saving the newsletter template.");
-									}
-								});
-						} else {
-							var payload = {
-									Title:  _.uniqueId("Newsletter "),
+									Title:  currentTemplateName,
 									Template: JSON.stringify(app.config)
 								};
 								
@@ -401,16 +398,12 @@ $(document).ready(function(){
 										alert("Error in service while saving the newsletter template.");
 									}
 								});
+						},
+						error: function(error){
+							alert("Error in service while getting CSRF token.");
 						}
-						
-					},
-					error: function(error){
-						alert("Error in service while getting CSRF token.");
-					}
-				});
-				
-				
-				
+					});
+				}
 			}
 			else{
 				//alert("There is no configuration to download.");
@@ -418,7 +411,61 @@ $(document).ready(function(){
 			}
 			
 		}
+	});
+	
+	$("#save_template_name_btn").click(function(){
 		
+		currentTemplateName = $("#template_name_input").val();
+		
+		if(currentTemplateName != ""){
+			$("#template_name_modal").modal("hide");
+			var csrfToken = "";
+			$.ajax({
+				url: urlRoot + "ZNEWSLETTER_SRV/$metadata",
+				type: "GET",
+				headers: {     
+                            "X-Requested-With": "XMLHttpRequest",
+                            "Content-Type": "application/atom+xml",
+                            "DataServiceVersion": "2.0",       
+                            "X-CSRF-Token":"Fetch"   
+						},
+				success: function(data, textStatus, request){
+					csrfToken = request.getResponseHeader('x-csrf-token');
+					var payload = {
+							Guid: "",
+							Title: currentTemplateName,
+							Template: JSON.stringify(app.config)
+						};
+						
+						$.ajax({
+							url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet",
+							type: "POST",
+							data: JSON.stringify(payload),
+							headers: {     
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                                "DataServiceVersion": "2.0",       
+                                "X-CSRF-Token": csrfToken   
+							},
+							success: function(response){
+								currentTemplateId = response.d.Guid;
+							},
+							error: function(error){
+								alert("Error in service while saving the newsletter template.");
+							}
+						});
+				},
+				error: function(error){
+					alert("Error in service while getting CSRF token.");
+				}
+			});
+			
+		} else {
+			
+			alert("Please enter template name.");
+			
+		}
 		
 	});
 	
