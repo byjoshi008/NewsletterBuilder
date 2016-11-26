@@ -26,13 +26,28 @@ function generatePreview(){
 			
 			_.each(column.content, function(content,index){
 				
-				var contentTable = $("<table width='100%' cellpadding='5'>");
+				var contentTable = $("<table width='100%' cellpadding='0'>");
 				contentTable.append($("<tr>").append($("<td valign='top' align='center'>").append(content.getContentHTML().html())));
 				//columnContent.append(content.getContentHTML().html());
 				columnContent.append(contentTable);
 			});
 			
+			if(column.properties.padding){
+				switch(column.properties.padding){
+				case "5":
+					$(".column_contnet", column.columnHTML).addClass("content_padding1");
+					break;
+				case "10":
+					$(".column_contnet", column.columnHTML).addClass("content_padding2");
+					break;
+				case "15":
+					$(".column_contnet", column.columnHTML).addClass("content_padding3");
+					break;
+				}
+			}
+			
 			sectionContent.append($("<td style='width:"+column.properties.width+"%;' class='deviceWidth' valign='top' align='left'>").append(column.columnHTML.html()));
+			
 			//sectionContent.append(column.columnHTML.html());
 		});
 		
@@ -43,6 +58,20 @@ function generatePreview(){
 			}
 			backToTopLink.append($("<td align='right'>").append($("<a href='#topsection' class='back_to_top_link font1'>").html("Back to Top")));
 			sectionContent.after(backToTopLink);
+		}
+		
+		if(section.properties.padding){
+			switch(section.properties.padding){
+			case "5":
+				$(".section_content > td",section.sectionHTML).addClass("content_padding1");
+				break;
+			case "10":
+				$(".section_content > td",section.sectionHTML).addClass("content_padding2");
+				break;
+			case "15":
+				$(".section_content > td",section.sectionHTML).addClass("content_padding3");
+				break;
+			}
 		}
 		
 		tempDiv.append(section.sectionHTML.html());

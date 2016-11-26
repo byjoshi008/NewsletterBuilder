@@ -125,6 +125,15 @@
 				<input type="text" class="form-control add_section_modal_input jscolor" id="background_color_input">
 			</div>
 			<div class="form-group">
+				<label for="section_padding_input">Padding</label> 
+				<select class="form-control add_section_modal_input" id="section_padding_input">
+					<option value="0">0 px</option>
+					<option value="5">5 px</option>
+					<option value="10">10 px</option>
+					<option value="15">15 px</option>
+				</select>
+			</div>
+			<div class="form-group">
 				<div class="checkbox">
   					<label style="font-weight: bold;"><input style="transform: scale(2.0);" type="checkbox" id="back_to_top_cb" name="back_to_top_cb" value="">&nbsp;&nbsp;&nbsp;"Back To Top" Link</label>
 				</div>
@@ -271,6 +280,15 @@
 					value="<%= bgColor %>">
 			</div>
 			<div class="form-group section_form_group">
+				<label>Padding</label> 
+				<select class="form-control section_padding">
+					<option value="0">0 px</option>
+					<option value="5">5 px</option>
+					<option value="10">10 px</option>
+					<option value="15">15 px</option>
+				</select>
+			</div>
+			<div class="form-group section_form_group">
 				<div class="checkbox">
   					<label style="font-weight: bold; width: 100%; text-align: center;"><input style="transform: scale(2.0); width: auto;" type="checkbox" class="section_back_to_top" value="">&nbsp;&nbsp;&nbsp;"Back To Top" Link</label>
 				</div>
@@ -292,6 +310,17 @@
 			<label>Width (%)</label> <input type="text"
 				class="form-control column_width"
 				value="<%= columnWidth %>">
+		</div>
+	</div>
+	<div class="column_form_group">
+		<div class="form-group">
+			<label>Padding</label> 
+			<select class="form-control column_padding">
+				<option value="0">0 px</option>
+				<option value="5">5 px</option>
+				<option value="10">10 px</option>
+				<option value="15">15 px</option>
+			</select>
 		</div>
 	</div>
 	<div class="column_content_container">
@@ -343,12 +372,6 @@
 			<option value="Medium">Medium</option>
 			<option value="Large">Large</option>
 			<option value="Full">Full</option>
-			<option value="XXL">XXL</option>
-			<option value="XL">XL</option>
-			<option value="L">L</option>
-			<option value="M">M</option>
-			<option value="S">S</option>
-			<option value="XS">XS</option>
 			<option value="Other">Other</option>
 		</select>
 	</div>
@@ -369,6 +392,14 @@
 		</div>
 	</div>
 	<div class="form-group content_form_group">
+		<label>Width</label> 
+		<input type="number" class="form-control image_width" value="<%= imageWidth %>">
+	</div>
+	<div class="form-group content_form_group">
+		<label>Height</label> 
+		<input type="number" class="form-control image_height" value="<%= imageHeight %>">
+	</div>
+	<div class="form-group content_form_group">
 		<label>CSS</label> 
 		<textarea rows="2" class="form-control image_content_style"><%= imageContentCSS %></textarea>
 	</div>
@@ -378,7 +409,7 @@
 <div class="section_template">
 	<a name="<%= sectionName %>"></a>
 	<table class="deviceWidth contentTable"
-		style="background-color: <%= bgColor %>" border="0" cellpadding="5"
+		style="background-color: <%= bgColor %>;" border="0" cellpadding="0"
 		cellspacing="0" align="center">
 		<tr class="section_content">
 			

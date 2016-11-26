@@ -28,6 +28,12 @@ Section.prototype.addSectionPanel = function(){
 		$(".section_back_to_top",panel).prop("checked",true);
 	}
 	
+	if($this.properties.padding){
+		$(".section_padding",panel).val($this.properties.padding);
+		$('.section_padding option:selected',panel).attr("selected",null);
+		$('.section_padding option[value="'+$this.properties.padding+'"]',panel).attr("selected","selected");
+	}
+	
 	this.panel = panel;
 	app.sections.push(this);
 	new jscolor($(".jscolor",panel)[0],app.colorPicker);
@@ -69,6 +75,13 @@ Section.prototype.addSectionPanel = function(){
 			$this.sectionHTML = $this.getSectionHTML();
 		}
 		
+	});
+	
+	//Change in section padding
+	$(".section_padding",panel).change(function(){
+		var padding = $(this).val();
+		$this.properties.padding = padding;
+		$this.sectionHTML = $this.getSectionHTML();
 	});
 	
 	//back to top link selection

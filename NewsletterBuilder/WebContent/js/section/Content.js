@@ -71,37 +71,19 @@ Content.prototype.getContentHTML = function(){
 			classStr = "width: 100%; height: auto; display: block; border: 0;";
 			imageAttr = "";
 			break;
-		case "XXL":
-			classStr = "height: 396px; width: 489px; display: block; border: 0;";
-			imageAttr = "height='396' width='489'";
-			break;
-		case "XL":
-			classStr = "height: 242px; width: 292px; display: block; border: 0;";
-			imageAttr = "height='242' width='292'";
-			break;
-		case "L":
-			classStr = "height: 242px; width: 250px; display: block; border: 0;";
-			imageAttr = "height='242' width='250'";
-			break;
-		case "M":
-			classStr = "height: 115px; width: 450px; display: block; border: 0;";
-			imageAttr = "height='115' width='450'";
-			break;
-		case "S":
-			classStr = "height: 115px; width: 450px; display: block; border: 0;";
-			imageAttr = "height='115' width='450'";
-			break;
-		case "XS":
-			classStr = "height: 196px; width: 169px; display: block; border: 0;";
-			imageAttr = "height='196' width='169'";
-			break;
 		case "Other":
-			classStr = "height: 206px; width: 228px; display: block; border: 0;";
-			imageAttr = "height='206' width='228'";
+			classStr = "display: block; border: 0;";
+			imageAttr = "";
 			break;
 		default:
 			classStr = "";
 			imageAttr = "";
+		}
+		
+		if(imageWidth || imageHeight){
+			imageAttr = "";
+			imageAttr = imageAttr + (imageWidth ? 'width="'+imageWidth+'"' : "");
+			imageAttr = imageAttr + (imageHeight ? 'height="'+imageHeight+'"' : "");
 		}
 		
 		classStr = classStr + "mso-table-lspace:0pt;mso-table-rspace:0pt;";
@@ -169,6 +151,22 @@ Content.prototype.bindChangeEvents = function(panel){
 			
 			var value = $(this).val();
 			$this.properties.category = value;
+			$this.contentHTML = $this.getContentHTML();
+
+		});
+		
+		$(".image_width",panel).change(function(){
+			
+			var value = $(this).val();
+			$this.properties.imageWidth = value;
+			$this.contentHTML = $this.getContentHTML();
+
+		});
+
+		$(".image_height",panel).change(function(){
+	
+			var value = $(this).val();
+			$this.properties.imageHeight = value;
 			$this.contentHTML = $this.getContentHTML();
 
 		});

@@ -81,6 +81,8 @@ Column.prototype.addContentPanel = function(content, columnPanel){
 			imageContent: value,
 			imageContentCSS: content.properties.style,
 			linkText: content.properties.link || "",
+			imageWidth: content.properties.imageWidth || "",
+			imageHeight: content.properties.imageHeight || ""
 		}));
 		
 		$(".image_category",contentPanel).val(content.properties.category);
@@ -107,6 +109,12 @@ Column.prototype.bindAddContentEvents = function(columnPanel){
 	$(".column_width", columnPanel).change(function(){
 		var width = $(this).val();
 		$this.properties.width = width;
+		$this.columnHTML =  $this.getColumnHTML();
+	});
+	
+	$(".column_padding", columnPanel).change(function(){
+		var padding = $(this).val();
+		$this.properties.padding = padding;
 		$this.columnHTML =  $this.getColumnHTML();
 	});
 	
@@ -151,7 +159,9 @@ Column.prototype.bindAddContentEvents = function(columnPanel){
 				imageData: "",
 				isLink: false,
 				link: "",
-				isExtLink: false
+				isExtLink: false,
+				imageWidth: "",
+				imageHeight: ""
 		};
 		var content = new Content(properties, $this);
 		$this.content.push(content);

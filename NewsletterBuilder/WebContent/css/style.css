@@ -75,7 +75,7 @@ body { overflow: auto; background-color: white; position: absolute; width: 100%;
 .section_panel_content { padding: 10px; }
 .section_form_group { }
 .section_form_group label { width: 45%; text-align: right; color: #555 !important; font-size: 13px;}
-.section_form_group input { width: 50%; display: inline; margin-left: 5px; }
+.section_form_group input, .section_form_group select { width: 50%; display: inline; margin-left: 5px; }
 
 /***********************************/
 /**** style for right content ****/
@@ -91,7 +91,7 @@ body { overflow: auto; background-color: white; position: absolute; width: 100%;
 .column_form_group { width: 100%; padding: 10px 20px; float: left }
 .column_form_group .form-group { width: 100%; float: left; margin-bottom: 0; }
 .column_form_group label { color: #555 !important; float: left; line-height: 30px; margin-right: 10px; font-size: 13px;}
-.column_form_group input { width: 100px; float: left; display: inline-block; }
+.column_form_group input, .column_form_group select { width: 100px; float: left; display: inline-block; }
 
 .column_content_container { width: 100%; float: left; }
 
