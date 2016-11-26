@@ -126,6 +126,85 @@ function loadTemplates(){
 	});*/
 }
 
+
+function resetConfig(){
+	app.sections = [];
+	app.config = { imageLocation: "", sections : [] };
+	$("#image_location_input").val("");
+	$(".section_panel_group").html("");
+	$(".column_container").html("");
+	$(".right_content .page_header").hide();
+	$("#new_config_modal").modal("hide");
+}
+
+function openConfig(guid){
+	$.ajax({
+		url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+guid+"')",
+		type: "GET",
+		headers: {     
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/atom+xml",
+                    "Accept": "application/json",
+                    "DataServiceVersion": "2.0",       
+				},
+		success: function(data, textStatus, request){
+			resetConfig();
+			app.config = JSON.parse(data.d.Template);
+			currentTemplateId = data.d.Guid;
+			currentTemplateName = data.d.Title;
+			$("#open_config_modal").modal("hide");
+			loadConfiguration();
+		},
+		
+		error: function(error){
+			alert("Error in service while fetching list of available templates.");
+		}
+	});
+}
+
+
+function saveConfig(){
+	var csrfToken = "";
+	$.ajax({
+		url: urlRoot + "ZNEWSLETTER_SRV/$metadata",
+		type: "GET",
+		headers: {     
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/atom+xml",
+                    "DataServiceVersion": "2.0",       
+                    "X-CSRF-Token":"Fetch"   
+				},
+		success: function(data, textStatus, request){
+			csrfToken = request.getResponseHeader('x-csrf-token');
+			var payload = {
+					Title:  currentTemplateName,
+					Template: JSON.stringify(app.config)
+				};
+				
+				$.ajax({
+					url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+currentTemplateId+"')",
+					type: "PUT",
+					data: JSON.stringify(payload),
+					headers: {     
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "DataServiceVersion": "2.0",       
+                        "X-CSRF-Token": csrfToken   
+					},
+					success: function(response){
+						
+					},
+					error: function(error){
+						alert("Error in service while saving the newsletter template.");
+					}
+				});
+		},
+		error: function(error){
+			alert("Error in service while getting CSRF token.");
+		}
+	});
+}
 /**
  * Start of the application
  */
@@ -291,16 +370,16 @@ $(document).ready(function(){
 				headerRow.append($("<th>").html("Template Name"));
 				headerRow.append($("<th>").html("Created On"));
 				headerRow.append($("<th>").html("Last Changed"));
+				headerRow.append($("<th>").html(""));
 				
 				table.append(headerRow)
 				
 				_.each(data.d.results, function(record){
 					var row = $("<tr class='config_table_record' data-guid='"+record.Guid+"' data-templatename = '"+record.Title+"'>")
 					
-					var column1 = $("<td>").html(record.Title);
+					var column1 = $("<td>").html($("<span class='config_table_title'>").html(record.Title));
 					row.append(column1);
-					
-					
+										
 					var createdDate = "-";
 					if(record.CreatedOn){
 						createdDate = moment(record.CreatedOn).format("DD/MM/YYYY hh:mm");
@@ -315,34 +394,30 @@ $(document).ready(function(){
 					var column3 = $("<td>").html(lastChangedDate);
 					row.append(column3);
 					
+					var column4 = $("<td>").html($("<span class='config_table_delete'>").html("Delete"));
+					row.append(column4);
+					
 					table.append(row);
 					
-					row.click(function(){
-						var guid = $(this).attr("data-guid");
-												
-						$.ajax({
-							url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+guid+"')",
-							type: "GET",
-							headers: {     
-				                        "X-Requested-With": "XMLHttpRequest",
-				                        "Content-Type": "application/atom+xml",
-				                        "Accept": "application/json",
-				                        "DataServiceVersion": "2.0",       
-									},
-							success: function(data, textStatus, request){
-								app.config = JSON.parse(data.d.Template);
-								currentTemplateId = data.d.Guid;
-								currentTemplateName = data.d.Title;
-								$("#open_config_modal").modal("hide");
-								loadConfiguration();
-							},
-							
-							error: function(error){
-								alert("Error in service while fetching list of available templates.");
-							}
-						});
+				});
+				
+				$(".config_table_title").click(function(){
+					var guid = $(this).parent().parent().attr("data-guid");
+					
+					if(currentTemplateId == ""){
+						openConfig(guid);
+					} else {
+						$("#open_config_confirm_btn").attr("data-guid",guid);
+						$("#open_config_modal").modal("hide");
+						$("#open_config_confirm_modal").modal("show");
 						
-					});
+					}
+					
+				});
+				
+				$(".config_table_delete").click(function(){
+					var guid = $(this).parent().parent().attr("data-guid");
+					alert("TO DO - Delete Service " + guid);
 				});
 				
 				$("#open_config_modal").modal("show");
@@ -354,6 +429,12 @@ $(document).ready(function(){
 			}
 		});
 		
+	});
+	
+	$("#open_config_confirm_btn").click(function(){
+		var guid = $(this).attr("data-guid");
+		$("#open_config_confirm_modal").modal("hide");
+		openConfig(guid);
 	});
 	
 	$("#export_html_btn").click(function(){
@@ -393,46 +474,7 @@ $(document).ready(function(){
 					$("#template_name_modal").modal("show");
 				}
 				else {
-					var csrfToken = "";
-					$.ajax({
-						url: urlRoot + "ZNEWSLETTER_SRV/$metadata",
-						type: "GET",
-						headers: {     
-	                                "X-Requested-With": "XMLHttpRequest",
-	                                "Content-Type": "application/atom+xml",
-	                                "DataServiceVersion": "2.0",       
-	                                "X-CSRF-Token":"Fetch"   
-								},
-						success: function(data, textStatus, request){
-							csrfToken = request.getResponseHeader('x-csrf-token');
-							var payload = {
-									Title:  currentTemplateName,
-									Template: JSON.stringify(app.config)
-								};
-								
-								$.ajax({
-									url: urlRoot + "ZNEWSLETTER_SRV/TemplateDataSet(Guid=guid'"+currentTemplateId+"')",
-									type: "PUT",
-									data: JSON.stringify(payload),
-									headers: {     
-		                                "X-Requested-With": "XMLHttpRequest",
-		                                "Content-Type": "application/json",
-		                                "Accept": "application/json",
-		                                "DataServiceVersion": "2.0",       
-		                                "X-CSRF-Token": csrfToken   
-									},
-									success: function(response){
-										
-									},
-									error: function(error){
-										alert("Error in service while saving the newsletter template.");
-									}
-								});
-						},
-						error: function(error){
-							alert("Error in service while getting CSRF token.");
-						}
-					});
+					saveConfig();
 				}
 			}
 			else{
@@ -441,6 +483,11 @@ $(document).ready(function(){
 			}
 			
 		}
+	});
+	
+	$("#config_save_as_btn").click(function(){
+		$("#template_name_input").val("");
+		$("#template_name_modal").modal("show");
 	});
 	
 	$("#save_template_name_btn").click(function(){
@@ -499,13 +546,7 @@ $(document).ready(function(){
 	});
 	
 	$("#new_config_modal_btn").click(function(e){
-		app.sections = [];
-		app.config = { imageLocation: "", sections : [] };
-		$("#image_location_input").val("");
-		$(".section_panel_group").html("");
-		$(".column_container").html("");
-		$(".right_content .page_header").hide();
-		$("#new_config_modal").modal("hide");
+		resetConfig();
 	});
 	
 	$("#save_global_option_btn").click(function(e){

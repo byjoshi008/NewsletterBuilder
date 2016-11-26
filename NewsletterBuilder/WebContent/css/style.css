@@ -12,7 +12,8 @@ body { overflow: auto; background-color: white; position: absolute; width: 100%;
 .right_btn_container { position: absolute; right: 0px; }
 .app_header_btn { float: right; margin-right: 5px; margin-top: 13px; font-size: 13px; }
 .app_header_btn i { margin-right: 5px; }
-.config_table_record { cursor: pointer; }
+.config_table_record {  }
+.config_table_title, .config_table_delete { cursor: pointer; color: #0087e4; text-decoration: underline; }
 .fileUpload {
     position: relative;
     overflow: hidden;
@@ -65,10 +66,10 @@ body { overflow: auto; background-color: white; position: absolute; width: 100%;
 .section_panel_header a { font-size: 16px; color: white; }
 .section_panel_header a:hover, .section_panel_header a:focus { text-decoration: none; color: white; }
 .section_panel_header a:before { 
-	font-family:'Glyphicons Halflings'; content:"\e114"; 
+	font-family:'FontAwesome'; content:"\f078"; 
 	float: left; margin-right: 10px; font-size: 16px;
 }
-.section_panel_header a.collapsed:before { content:"\e080"; }
+.section_panel_header a.collapsed:before { content:"\f054"; }
 .section_panel_header span { float: right; color: white; font-size: 18px; cursor: pointer; margin-left: 15px; }
 
 .section_panel { border-radius: 0 !important; box-shadow: none; border: none; margin: 0 !important; }
@@ -108,10 +109,10 @@ body { overflow: auto; background-color: white; position: absolute; width: 100%;
 .content_panel_header a { font-size: 15px; color: white; text-transform: capitalize; }
 .content_panel_header a:hover, .content_panel_header a:focus { text-decoration: none; color: white; }
 .content_panel_header a:before { 
-	font-family:'Glyphicons Halflings'; content:"\e114"; 
+	font-family:'FontAwesome'; content:"\f078"; 
 	float: left; margin-right: 10px; font-size: 16px;
 }
-.content_panel_header a.collapsed:before { content:"\e080"; }
+.content_panel_header a.collapsed:before { content:"\f054"; }
 .content_delete { float: right; color: white; font-size: 18px; cursor: pointer; }
 
 .content_panel_content { }

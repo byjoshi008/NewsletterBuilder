@@ -12,8 +12,12 @@
 <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<!-- <link href="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/bootstrap/js/bootstrap.min.js"></script> -->
 
-<link href="./css/fonts/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<!-- <link href="./css/fonts/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/> -->
+<link href="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 <link href="./css/jquery.toast.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="./js/utils/jquery.toast.js"></script>
@@ -21,8 +25,10 @@
 <script type="text/javascript" src="./js/utils/jscolor.js"></script>
 <script type="text/javascript" src="./js/utils/moment.min.js"></script>
 
-<link href="./summernote/summernote.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="./summernote/summernote.min.js"></script>
+<!-- <link href="./summernote/summernote.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="./summernote/summernote.min.js"></script> -->
+<link href="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/summernote/summernote.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://ntbomsap24.corp.capgemini.com:8010/sap/public/bc/ui2/znewsletter_resources/summernote/summernote.min.js"></script>
 
 <link href="./css/style.css" rel="stylesheet" type="text/css"/>
 
@@ -56,6 +62,10 @@
 		</button>
 		<button id="editor_btn" class="btn btn-primary btn-md app_header_btn">
 			<i class="fa fa-cogs" aria-hidden="true"></i> Editor
+		</button>
+		<button id="config_save_as_btn"
+			class="btn btn-primary btn-md app_header_btn">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i> Save As
 		</button>
 		<button id="config_download_btn"
 			class="btn btn-primary btn-md app_header_btn">
@@ -169,6 +179,31 @@
 	  <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="button" id="new_config_modal_btn" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="open_config_confirm_modal" class="modal fade app_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Open Configuration</h4>
+      </div>
+      
+	  <div class="modal-body">
+	  	<div class="modal_body_content">
+			<span>Your existing changes will be lost. Do you want to continue ?</span> 
+		</div>
+	  </div>
+	  
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" id="open_config_confirm_btn" class="btn btn-primary">Open</button>
       </div>
     </div>
   </div>
