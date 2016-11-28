@@ -54,7 +54,7 @@ Content.prototype.getContentHTML = function(){
 		case "Medium":
 			//classStr = "class='nl_img_medium'";
 			//classStr = "height: 150px; max-width: 70%; margin: 10px 0;";
-			classStr = "height: 150px; max-width: 70%; display: block; border: 0;";
+			classStr = "height: auto; max-width: 60%; display: block; border: 0;";
 			//imageAttr = "height='150' width='70%'";
 			imageAttr = "height='150' width='150'";
 			//imageAttr = "width='60%' vspace='10' align='center'";
@@ -62,7 +62,7 @@ Content.prototype.getContentHTML = function(){
 		case "Large":
 			//classStr = "class='nl_img_large'";
 			//classStr = "height: 250px; max-width: 90%; margin: 10px 0;";
-			classStr = "height: 250px; max-width: 90%; display: block; border: 0;";
+			classStr = "height: auto; max-width: 80%; display: block; border: 0;";
 			//imageAttr = "height='250' width='90%'";
 			imageAttr = "height='250' width='250'";
 			//imageAttr = "width='80%' vspace='10' align='center'";
