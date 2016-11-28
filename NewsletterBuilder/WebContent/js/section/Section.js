@@ -30,8 +30,6 @@ Section.prototype.addSectionPanel = function(){
 	
 	if($this.properties.padding){
 		$(".section_padding",panel).val($this.properties.padding);
-		$('.section_padding option:selected',panel).attr("selected",null);
-		$('.section_padding option[value="'+$this.properties.padding+'"]',panel).attr("selected","selected");
 	}
 	
 	this.panel = panel;
@@ -143,8 +141,12 @@ Section.prototype.addColumnToPanel = function(){
 			sectionName: $this.properties.name,
 			columnName: columnName,
 			columnWidth: column.properties.width,
-		}))
+		}));
 		
+		if(column.properties.padding){
+			$(".column_padding",div).val(column.properties.padding);
+		}
+
 		column.columnPanel = div;
 		column.columnHTML =  column.getColumnHTML();
 		
@@ -214,7 +216,8 @@ Section.prototype.getSectionHTML = function(){
 	
 	var $this = this;
 	var sectionTemplate = _.template(_.unescape($(".section_template",app.sectionTemplate).html()));
-	var section = $("<div>").html(sectionTemplate({sectionName: $this.properties.name, bgColor:$this.properties.bgColor}));
+	var section = $("<div>").html(sectionTemplate({sectionName: $this.properties.name.replace(/\s/g,''), bgColor:$this.properties.bgColor}));
+	
 	return section;	
 }
 

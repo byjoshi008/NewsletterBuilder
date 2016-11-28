@@ -218,6 +218,24 @@ $(document).ready(function(){
 	
 	loadConfiguration();
 	
+	//expand collapse sections
+	$(".section_expand_collapse").click(function(){
+		
+		if($(this).hasClass("section_expand")){
+			$(this).removeClass("section_expand");
+			$(".section_panel_header a ",$(".section_panel_group")).removeClass("collapsed");
+			$(".section_panel .panel-collapse ",$(".section_panel_group")).addClass("in");
+			$(this).addClass("section_collapse");
+			
+		} else {
+			$(this).removeClass("section_collapse");
+			$(".section_panel_header a ",$(".section_panel_group")).addClass("collapsed");
+			$(".section_panel .panel-collapse ",$(".section_panel_group")).removeClass("in");
+			$(this).addClass("section_expand");
+		}
+		
+	});
+	
 	//sortable event for section panel to drag and drop sections
 	var secStartIndex;
 	$(".section_panel_group").sortable({
@@ -247,6 +265,7 @@ $(document).ready(function(){
 	$("#create_section_btn").click(function(){
 		var name = $("#section_name_input").val();
 		var bgColor = $("#background_color_input").val();
+		var padding = $("#section_padding_input").val();
 		var backToTopLink = $("#back_to_top_cb").prop("checked");
 		if(name != "" && bgColor != ""){
 			
@@ -255,6 +274,7 @@ $(document).ready(function(){
 						name: name,
 						bgColor: bgColor,
 						backToTopLink: backToTopLink,
+						padding: padding,
 						columns: []
 				};
 				
@@ -304,6 +324,7 @@ $(document).ready(function(){
 			
 			var properties = {
 					width: width-1,
+					padding: "",
 					content: []
 			};
 			

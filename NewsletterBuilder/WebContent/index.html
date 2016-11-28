@@ -80,7 +80,9 @@
 		<div class="left_content">
 			<div id="page1" class="page active_page">
 				<div class="page_header row">
-					<div class="col-xs-2"></div>
+					<div class="col-xs-2">
+						<span class="section_expand_collapse section_collapse"></span>
+					</div>
 					<div class="col-xs-8 page_header_text">Sections</div>
 					<div class="col-xs-2">
 						<button id="add_section_btn" class="btn btn-primary btn-md page_header_btn" data-toggle="modal" data-target="#add_section_modal">
@@ -442,10 +444,10 @@
 </script>
 <script type="text/html" id="section_template">
 <div class="section_template">
-	<a name="<%= sectionName %>"></a>
 	<table class="deviceWidth contentTable"
 		style="background-color: <%= bgColor %>;" border="0" cellpadding="0"
 		cellspacing="0" align="center">
+		<tr><td><a name="<%= sectionName %>"></a></td></tr>
 		<tr class="section_content">
 			
 		</tr>
@@ -475,9 +477,12 @@ table { border-collapse: collapse; }
 .mainColumn { width: 100%; padding: 20px 0; }
 .contentTable { margin: 0 auto; width: 800px; }
 .deviceWidth { margin: 0 auto; width: 800px; }
-.section_content { padding: 5px 0; }
 .nl_text { color: white; width: 90%; padding: 0 8px; font-size: 14px; line-height: 15px; margin: 5px auto; text-align: justify; }
 .nl_text a { color: white; }
+
+.content_padding1 { mso-padding-alt:0.3cm 0.1cm 0.3cm 0.1cm; padding: 5px 5px; }
+.content_padding2 { mso-padding-alt:0.3cm 0.3cm 0.3cm 0.3cm; padding: 10px 10px; }
+.content_padding3 { mso-padding-alt:0.4cm 0.4cm 0.4cm 0.4cm; padding: 15px 15px; }
 
 .ExternalClass {width:100%;} 
                          
@@ -490,16 +495,16 @@ p { margin:0; padding:0; margin-bottom:0; color: #FFF; }
 div { margin:0; padding:0; margin-bottom:0; color: #FFF; }
 span, li { color: #FFF; } 
 
-a, a:link {
-	color:#FFF;
-    text-decoration: underline;
-}  
+p.MsoNormal { margin-bottom: 0pt; }
+p.MsoNormal span { font-size: 0pt !important; }
+
+a, a:link { color:#FFF; text-decoration: none; }  
  
 span.yshortcuts { color:#FFF; background-color:none; border:none;}
 span.yshortcuts:hover, span.yshortcuts:active, span.yshortcuts:focus {color:#FFF; background-color:none; border:none;}
                  
-a:visited { color: #FFF; text-decoration: underline;} 
-a:focus   { color: #FFF; text-decoration: underline;}  
+a:visited { color: #FFF; text-decoration: none;} 
+a:focus   { color: #FFF; text-decoration: none;}  
 a:hover   { color: #FFF; text-decoration: underline;}  
                          
 @media only screen and (max-width: 640px) {

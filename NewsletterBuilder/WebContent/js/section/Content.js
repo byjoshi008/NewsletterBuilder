@@ -36,6 +36,8 @@ Content.prototype.getContentHTML = function(){
 		var isLink = properties.isLink || false;
 		var link = properties.link || "";
 		var isExtLink = properties.isExtLink || false;
+		var imageWidth = properties.imageWidth || "";
+		var imageHeight = properties.imageHeight || "";
 		
 		var imageAttr = "";
 		properties.imageData = "";
