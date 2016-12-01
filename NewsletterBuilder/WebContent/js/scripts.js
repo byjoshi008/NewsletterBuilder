@@ -76,7 +76,7 @@ function generatePreview(){
 		
 		tempDiv.append(section.sectionHTML.html());
 		
-		$("a",tempDiv).attr("style","color: #FFFFF6;");
+		$("a",tempDiv).attr("style","color: #085294;");
 	});
 	
 	var iframe = document.getElementById('nl_iframe'),
