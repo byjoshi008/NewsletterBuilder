@@ -135,6 +135,9 @@ function resetConfig(){
 	$(".column_container").html("");
 	$(".right_content .page_header").hide();
 	$("#new_config_modal").modal("hide");
+	$(".sub_title").html("(New Template)");
+	currentTemplateId = "";
+	currentTemplateName = "";
 }
 
 function openConfig(guid){
@@ -153,11 +156,14 @@ function openConfig(guid){
 			currentTemplateId = data.d.Guid;
 			currentTemplateName = data.d.Title;
 			$("#open_config_modal").modal("hide");
+			$(".sub_title").html("("+currentTemplateName+")");
+			
 			loadConfiguration();
+			
 		},
 		
 		error: function(error){
-			alert("Error in service while fetching list of available templates.");
+			messageToast("error","Error in service to open the template.","Open Template Error");
 		}
 	});
 }
@@ -193,15 +199,16 @@ function saveConfig(){
                         "X-CSRF-Token": csrfToken   
 					},
 					success: function(response){
-						
+						$(".sub_title").html("("+currentTemplateName+")");
+						messageToast("success","Template is saved.","Save Template");
 					},
 					error: function(error){
-						alert("Error in service while saving the newsletter template.");
+						messageToast("error","Error in service while saving the newsletter template.","Save Template");
 					}
 				});
 		},
 		error: function(error){
-			alert("Error in service while getting CSRF token.");
+			messageToast("error","Error in service while getting CSRF token.","CSRF Token Error");
 		}
 	});
 }
@@ -287,11 +294,11 @@ $(document).ready(function(){
 				
 			}
 			else{
-				alert("Section with this name is already present. Please enter a different name.");
+				messageToast("error","Section with this name is already present. Please enter a different name.","Create Section");
 			}
 		}
 		else{
-			alert("Name and Background color are mandatory fields.");
+			messageToast("error","Name and Background color are mandatory fields.","Mandatory Input");
 		}
 	});
 	
@@ -302,7 +309,7 @@ $(document).ready(function(){
 		var $this = app.currentSection;
 		
 		if($this.columns.length >= 4){
-			alert("More than 4 columns cannot be added to the section.");
+			messageToast("warning","More than 4 columns cannot be added to the section.","Add Column Warning");
 		}
 		else{
 			var width = "100";
@@ -313,7 +320,7 @@ $(document).ready(function(){
 				width = "33";
 			}
 			else if($this.columns.length == 3){
-				width = "25"
+				width = "25";
 			}
 			
 			//update new width in all column objects
@@ -446,7 +453,7 @@ $(document).ready(function(){
 			},
 			
 			error: function(error){
-				alert("Error in service while fetching list of available templates.");
+				messageToast("error","Error in service while fetching list of available templates.","Template List Service");
 			}
 		});
 		
@@ -461,7 +468,7 @@ $(document).ready(function(){
 	$("#export_html_btn").click(function(){
 		
 		if(app.config.imageLocation == ""){
-			alert("Image location is not available. Please maintain image location in Global Settings.");
+			messageToast("error","Image location is not available. Please maintain image location in Global Settings.","Mandatory Input");
 		} else {
 			app.previewFlag = false;
 			var htmlContent = generatePreview();
@@ -480,7 +487,7 @@ $(document).ready(function(){
 	$("#config_download_btn").click(function(){
 		
 		if(app.config.imageLocation == ""){
-			alert("Image location is not available. Please maintain image location in Global Settings.");
+			messageToast("error","Image location is not available. Please maintain image location in Global Settings.","Mandatory Input");
 		} else {
 			
 			if( !_.isEmpty(app.config.sections)){
@@ -500,7 +507,7 @@ $(document).ready(function(){
 			}
 			else{
 				//alert("There is no configuration to download.");
-				alert("There is no configuration to save.");
+				messageToast("error","There is no template to save.","No Active Template");
 			}
 			
 		}
@@ -547,20 +554,22 @@ $(document).ready(function(){
 							},
 							success: function(response){
 								currentTemplateId = response.d.Guid;
+								$(".sub_title").html("("+currentTemplateName+")");
+								messageToast("success","Template - "+currentTemplateName+" is saved.","Save Template");
 							},
 							error: function(error){
-								alert("Error in service while saving the newsletter template.");
+								messageToast("error","Error in service while saving the newsletter template.","Save Template");
 							}
 						});
 				},
 				error: function(error){
-					alert("Error in service while getting CSRF token.");
+					messageToast("error","Error in service while getting CSRF token.","CSRF Token Error");
 				}
 			});
 			
 		} else {
 			
-			alert("Please enter template name.");
+			messageToast("error","Please enter template name.","Mandatory Input");
 			
 		}
 		
@@ -576,3 +585,28 @@ $(document).ready(function(){
 		$("#global_options_modal").modal("hide");
 	});
 });
+
+/**
+ * Function to display Toast Message
+ * @param messageType - "info", "warning", "error" or "success"
+ * @param message - Message text to be shown on toast
+ * @param header - Header Text to be shown on toast
+ * @returns
+ */
+function messageToast(messageType, message, header){
+	
+	var toastSettings = {
+		text: message,
+		showHideTransition: 'slide',
+		icon: messageType,
+		hideAfter: 5000,
+		position: 'bottom-left',
+		loader: false
+	};
+	
+	if(header && header != "" && header != undefined){
+		toastSettings.heading = header;
+	}
+	
+	$.toast(toastSettings);
+}

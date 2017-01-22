@@ -8,7 +8,7 @@ var Column = function(properties, section){
 	this.columnPanel = "";
 	this.addColumnContents();
 	this.columnHTML =  this.getColumnHTML();
-}
+};
 
 Column.prototype.addColumnContents = function(){
 	
@@ -17,7 +17,7 @@ Column.prototype.addColumnContents = function(){
 		var content = new Content(contentProps, $this);
 		$this.content.push(content);
 	});
-}
+};
 
 /**
  * Function to add column content panels to column configuration page
@@ -28,7 +28,7 @@ Column.prototype.addContentPanels = function(columnPanel){
 	_.each(this.content, function(content, index){
 		$this.addContentPanel(content, columnPanel);
 	});
-}
+};
 
 /**
  * Function to add content panel to column configuration page
@@ -70,7 +70,7 @@ Column.prototype.addContentPanel = function(content, columnPanel){
 			fontSizes: ['6', '8', '10', '11', '12', '13', '14', '15', '16', '18' , '20', '22', '24', '26', '28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', '58', '60']
 		});
 		
-		$(".text_editor",contentPanel).summernote('code',content.properties.detail)
+		$(".text_editor",contentPanel).summernote('code',content.properties.detail);
 	}
 	else if(type.toUpperCase() == "IMAGE"){
 		
@@ -98,7 +98,7 @@ Column.prototype.addContentPanel = function(content, columnPanel){
 	
 	contentPanelGroup.append(contentPanel);
 	content.bindChangeEvents(contentPanel);
-}
+};
 
 /**
  * Function to bind events to add new content to column
@@ -170,7 +170,7 @@ Column.prototype.bindAddContentEvents = function(columnPanel){
 		$this.properties.content.push(properties);
 		generatePreview();
 	});
-}
+};
 
 /**
  * Function to generate HTML content for column
@@ -182,7 +182,7 @@ Column.prototype.getColumnHTML = function(){
 	var columnTemplate = _.template(_.unescape($(".column_template",app.sectionTemplate).html()));
 	var column = $("<div>").html(columnTemplate({columnWidth : $this.properties.width}));
 	return column;	
-}
+};
 
 /**
  * Function to refresh column content properties
@@ -195,4 +195,4 @@ Column.prototype.refreshColumnContentProperties = function(){
 	});
 	
 	this.properties.content = colContent;
-}
+};

@@ -133,6 +133,8 @@ Section.prototype.addColumnToPanel = function(){
 		div.css("width",colWidth+"%");
 		$(".column_container").append(div);
 		
+		column.properties.width = Math.round(colWidth)-1;
+		
 		/*if(!column.properties.width){
 			column.properties.width = parseInt(colWidth)-1;
 		} */
