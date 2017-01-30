@@ -56,7 +56,7 @@ function generatePreview(){
 			for(var i=0; i<section.columns.length-1; i++){
 				backToTopLink.append($("<td>"));
 			}
-			backToTopLink.append($("<td align='right'>").append($("<a href='#topsection' class='back_to_top_link font1'>").html("Back to Top")));
+			backToTopLink.append($("<td align='center'>").append($("<a href='#topsection' class='back_to_top_link font1'>").html("Back to Top")));
 			sectionContent.after(backToTopLink);
 		}
 		
